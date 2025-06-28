@@ -1,12 +1,24 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class M_Minimum_LCM {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     static PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));
     static Scanner sc = new Scanner(System.in);
+    public static boolean isPrime(int n) {
+        if (n <= 1) {
+            return false;
+        }
+        for (int i = 2; i * i <= n; i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     public static void main(String[] args) throws IOException {
         int T = nextInt(); // Number of test cases
@@ -21,7 +33,24 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        
+        int n = nextInt();
+
+        List<Integer> factors = new ArrayList<>();
+        for(int i=1; i<=(int)Math.sqrt(n); i++) {
+            if(n%i == 0) {
+                factors.add(i);
+                factors.add(n/i);
+            }
+        }
+        int curr = 1;
+        long mul = Integer.MAX_VALUE;
+        for(int num: factors) {
+            if((long)Math.max(num, n-num) < mul) {
+                mul = Math.max(num, n-num);
+                curr = num;
+            }
+        }
+        out.println(curr + " " + (n-curr));
         
     }
 

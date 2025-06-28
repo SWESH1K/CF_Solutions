@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class D_Distinct_Split {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,8 +21,30 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        
-        
+        int n = nextInt();
+        String s = next();
+
+        int[] prefix = new int[n];
+        Set<Character> set = new HashSet<>();
+        for(int i=0; i<n; i++) {
+            char c = s.charAt(i);
+            set.add(c);
+            prefix[i] = set.size();
+        }
+        int[] suffix = new int[n];
+        set.clear();
+        for(int i=0; i<n; i++) {
+            char c = s.charAt(n-1-i);
+            set.add(c);
+            suffix[n-1-i] = set.size();
+        }
+        int maxi = Integer.MIN_VALUE;
+        for(int i=0; i<n-1; i++) {
+            maxi = Math.max(maxi, prefix[i]+suffix[i+1]);
+        }
+        // out.println(Arrays.toString(prefix));
+        // out.println(Arrays.toString(suffix));
+        out.println(maxi);
     }
 
     // -- Fast I/O helpers --

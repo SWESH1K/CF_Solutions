@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_Collecting_Game {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,7 +21,6 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        
         
     }
 
@@ -101,7 +100,6 @@ final class Pair<T1, T2> {
         this.x = x;
         this.y = y;
     }
-
     public Pair(Pair<T1, T2> other) {
         this.x = other.x;
         this.y = other.y;
