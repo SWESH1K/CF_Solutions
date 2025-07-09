@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class C_Yet_Another_Card_Deck {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -9,11 +9,11 @@ public class Main {
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-        int T = nextInt(); // Number of test cases
+        // int T = nextInt(); // Number of test cases
 
-        while (T-- > 0) {
+        // while (T-- > 0) {
             solve();
-        }
+        // }
 
         out.flush();
         out.close();
@@ -21,8 +21,28 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        
-        
+        int n = nextInt();
+        int q = nextInt();
+
+        int[] arr = new int[51];
+        Arrays.fill(arr, -1);
+
+        for(int i=1; i<=n; i++) {
+            int x = nextInt();
+            if(arr[x]==-1) arr[x] = i;
+        }
+
+        while(q-->0) {
+            int y = nextInt();
+            for(int i=1; i<=50; i++) {
+                if(arr[i]<arr[y]) {
+                    arr[i]++;
+                }
+            }
+            out.print(arr[y] + " ");
+            arr[y]=1;
+        }
+        out.println();
     }
 
     // -- Fast I/O helpers --

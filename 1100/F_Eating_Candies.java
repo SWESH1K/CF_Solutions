@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class F_Eating_Candies {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,7 +21,26 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        
+        int n = nextInt();
+
+        int[] arr = new int[n];
+        long prefix = 0, suffix=0;
+        Map<Long, Integer> map = new HashMap<>();
+        for(int i=0; i<n; i++) {
+            arr[i] = nextInt();
+            prefix += arr[i];
+            map.put(prefix, i);
+        }
+        long ans = 0;
+        // out.println(map);
+        for(int i=n-1; i>=0; i--) {
+            suffix += arr[i];
+            if(map.containsKey(suffix) && map.get(suffix)<i) {
+                // out.println("Found at " + i);
+                ans = Math.max(ans, (n-i) + map.get(suffix)+1);
+            }
+        }
+        out.println(ans);
         
     }
 

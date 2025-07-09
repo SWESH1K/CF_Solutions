@@ -22,39 +22,34 @@ public class C_Quests {
     static void solve() throws IOException {
         // MainCode goes here
         int n = nextInt();
-
-        long k = nextLong();
+        int k = nextInt();
 
         int a[] = new int[n];
-        int p[] = new int[n+1];
-        int b[] = new int[n];
-
+        int[] b = new int[n];
         for(int i=0; i<n; i++) {
             a[i] = nextInt();
         }
         for(int i=0; i<n; i++) {
             b[i] = nextInt();
         }
-        for(int i=n-1; i>0; i--) {
-            p[i] = p[i+1]+a[i];
-        }
-
-        long ans = a[0];
-        k--;
-        for(int l=1; l<n; l++) {
-            int r = Math.min(n, (int)(l+k));
-
-            if(b[l-1]*k > p[l]-p[r]) {
-                ans += b[l-1]*k;
-                break;
+        long ans = 0, maxi=0, sum=0;
+        int counter = 0;
+        for(int i=0; i<n && counter<k; i++) {
+            sum += a[i];
+            counter++;
+            if(counter!=k) {
+                maxi = Math.max(maxi, b[i]);
+                long curr = sum + (k-counter)*maxi;
+                // out.println(sum + " " + (k-counter)*b[i] + " " + counter);
+                ans = Math.max(curr, ans);
             }
-
-            ans += a[l];
-            k--;
+            else {
+                ans = Math.max(sum, ans);
+            }
         }
 
         out.println(ans);
-
+        
     }
 
     // -- Fast I/O helpers --
@@ -132,5 +127,15 @@ final class Pair<T1, T2> {
     public Pair(T1 x, T2 y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Pair(Pair<T1, T2> other) {
+        this.x = other.x;
+        this.y = other.y;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + this.x + "," + this.y + ")";
     }
 }

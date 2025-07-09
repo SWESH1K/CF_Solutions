@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_Kill_Demodogs {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,7 +21,24 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
+        int n = nextInt();
+
+        long ans = 0;
+        long inv2 = modInv(2, MOD);
+        long inv6 = modInv(6, MOD);
+
+        long sum = modMul(n, n+1, MOD);
+        sum = modMul(sum, inv2, MOD);
         
+        long sqSum = modMul(n, n+1, MOD);
+        sqSum = modMul(sqSum, 2*n + 1, MOD);
+        sqSum = modMul(sqSum, inv6, MOD);
+
+        // out.println(sum + " " + sqSum);
+        ans = modSub(modMul(2, sqSum, MOD), sum, MOD);
+
+        ans = modMul(ans, 2022L, MOD);
+        out.println(ans);
         
     }
 

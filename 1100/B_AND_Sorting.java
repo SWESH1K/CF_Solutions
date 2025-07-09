@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_AND_Sorting {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,7 +21,18 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        
+        int n = nextInt();
+
+        int ans = Integer.MAX_VALUE;
+        int[] arr = new int[n];
+        for(int i=0; i<n; i++) {
+            arr[i] = nextInt();
+            if(arr[i] != i) {
+                ans&=arr[i];
+            }
+        }
+
+        out.println(ans);
         
     }
 

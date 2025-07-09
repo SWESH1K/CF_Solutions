@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class C_Yarik_and_Array {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -19,9 +19,33 @@ public class Main {
         out.close();
     }
 
+    static char parity(int n) {
+        return ((n&1)==0)? 'e':'o';
+    }
+
     static void solve() throws IOException {
         // MainCode goes here
-        
+        int n = nextInt();
+
+        int[] arr = new int[n];
+
+        for(int i=0; i<n; i++) {
+            arr[i] = nextInt();
+        }
+
+        long ans = arr[0];
+        long curr = arr[0];
+        for(int i=1; i<n; i++) {
+            if(parity(arr[i-1])==parity(arr[i]) || curr<0)  {
+                curr = arr[i];
+            }
+            else {
+                curr += arr[i];
+            }
+            ans = Math.max(ans, curr);
+        }
+
+        out.println(ans);
         
     }
 

@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_A_Perfectly_Balanced_String {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,7 +21,36 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        
+        char[] arr = next().toCharArray();
+        int flag=0;
+        Set<Character> set = new HashSet<>();
+        for(int i=0; i<arr.length; i++) {
+            set.add(arr[i]);
+        }
+        if(set.size()==1) {
+            out.println("YES");
+            return;
+        }
+
+        Map<Character, Integer> map = new HashMap<>();
+        for(int i=0; i<arr.length; i++) {
+            if(map.containsKey(arr[i])) {
+                int size = i-map.get(arr[i]);
+                // out.println(size + " " + set.size());
+                if(size<set.size()) {
+                    flag=1;
+                    break;
+                }
+            }
+            map.put(arr[i], i);
+        }
+
+        if(flag==1) {
+            out.println("NO");
+        }
+        else {
+            out.println("YES");
+        }
         
     }
 

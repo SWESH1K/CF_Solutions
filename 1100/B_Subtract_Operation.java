@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_Subtract_Operation {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,7 +21,23 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        
+        int n = nextInt();
+
+        int k = nextInt();
+        Set<Integer> set = new HashSet<>();
+        for(int i=0; i<n; i++) {
+            set.add(nextInt());
+        }
+
+        Iterator ite = set.iterator();
+        while(ite.hasNext()) {
+            int req = (int)ite.next() - k;
+            if(set.contains(req)) {
+                out.println("YES");
+                return;
+            }
+        }
+        out.println("NO");
         
     }
 

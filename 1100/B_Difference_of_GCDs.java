@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_Difference_of_GCDs {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,7 +21,31 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        
+        int n = nextInt();
+        int l = nextInt();
+        int r = nextInt();
+
+        int flag=0;
+        int[] ans = new int[n];
+        for(int i=0; i<n; i++) {
+            int req = r - (r%(i+1));
+            if(req<l) {
+                flag=1;
+                break;
+            }
+            ans[i] = req;
+        }
+
+        if(flag==1) {
+            out.println("NO");
+        }
+        else {
+            out.println("YES");
+            for(int i=0; i<n; i++) {
+                out.print(ans[i] + " ");
+            }
+            out.println();
+        }
         
     }
 

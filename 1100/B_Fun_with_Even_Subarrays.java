@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_Fun_with_Even_Subarrays {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,7 +21,28 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        
+        int n = nextInt();
+
+        int[] arr = new int[n];
+        for(int i=0; i<n; i++) {
+            arr[i] = nextInt();
+        }
+
+        int ans = 0;
+
+        for(int i=n-2; i>=0;) {
+            // If the curr ele is the last ele add it to stock
+            if(arr[i]!=arr[n-1]) {
+                ans++;
+                i-=(n-1)-i;
+            }
+            else {
+                i--;
+            }
+            
+        }
+
+        out.println(ans);
         
     }
 

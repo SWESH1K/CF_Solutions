@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_Kalindrome_Array {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -10,19 +10,54 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         int T = nextInt(); // Number of test cases
-
+        int t = 0;
         while (T-- > 0) {
-            solve();
+            t++;
+            solve(t);
         }
 
         out.flush();
         out.close();
     }
 
-    static void solve() throws IOException {
+    static boolean isIgnorePalindrome(int[] arr, int x) {
+        StringBuilder sb = new StringBuilder();
+        StringBuilder sbRev = new StringBuilder();
+        int n = arr.length;
+        for(int i=0; i<n; i++) {
+            if(arr[i] == x) continue;
+            sb.append(arr[i] + " ");
+        }
+        for(int i=n-1; i>=0; i--) {
+            if(arr[i] == x) continue;
+            sbRev.append(arr[i] + " ");
+        }
+
+        return sb.toString().equals(sbRev.toString());
+    }
+
+    static void solve(int T) throws IOException {
         // MainCode goes here
-        
-        
+        int n = nextInt();
+
+        int arr[] = new int[n];
+
+        for(int i=0; i<n; i++) {
+            arr[i] = nextInt();
+        }
+
+        int i = 0, j=n-1;
+        while(i<j && arr[i]==arr[j]) {
+            i++;
+            j--;
+        }
+        // out.println(i + " " + j);
+        if(isIgnorePalindrome(arr, arr[i]) || isIgnorePalindrome(arr, arr[j])) {
+            out.println("YES");
+        }
+        else {
+            out.println("NO");
+        }
     }
 
     // -- Fast I/O helpers --

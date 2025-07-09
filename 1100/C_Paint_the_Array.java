@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class C_Paint_the_Array {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,8 +21,42 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        
-        
+        int n = nextInt();
+
+        long[] arr = new long[n];
+
+        long even_gcd=-1, odd_gcd=-1;
+
+        for(int i=0; i<n; i++) {
+            arr[i] = nextLong();
+            if(i==0) even_gcd = arr[i];
+            else if(i==1) odd_gcd = arr[i];
+            else if((i&1)==0) even_gcd = gcd(even_gcd, arr[i]);
+            else odd_gcd = gcd(odd_gcd, arr[i]);
+        }
+        int flag=1;
+        for(int i=1; i<n; i+=2) {
+            if(arr[i]%even_gcd == 0) {
+                flag=0;
+                break;
+            }
+        }
+        if(flag==1) {
+            out.println(even_gcd);
+            return;
+        }
+        flag=1;
+        for(int i=0; i<n; i+=2) {
+            if(arr[i]%odd_gcd == 0) {
+                flag=0;
+                break;
+            }
+        }
+        if(flag==1) {
+            out.println(odd_gcd);
+            return;
+        }
+        out.println(0);
     }
 
     // -- Fast I/O helpers --
