@@ -1,18 +1,18 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_Stone_Age_Problem {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     static PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));
 
     public static void main(String[] args) throws IOException {
-        int T = nextInt(); // Number of test cases
+        // int T = nextInt(); // Number of test cases
 
-        while (T-- > 0) {
+        // while (T-- > 0) {
             solve();
-        }
+        // }
 
         out.flush();
         out.close();
@@ -21,21 +21,42 @@ public class Main {
     static void solve() throws IOException {
         // MainCode goes here
         int n = nextInt();
+        int q = nextInt();
+        Debugger.log("n", n);
+        Debugger.log("q", q);
+        HashMap<Long, Long> map = new HashMap<>();
+        long sum = 0;
 
-        int[] arr = new int[n];
-        for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
+        for(long i=0; i<n; i++) {
+            long x = nextInt();
+            map.put(i+1, x);
+            sum += x;
         }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
+        Debugger.log(map);
+        long curr = 0;
+        while(q-->0) {
+            int t = nextInt();
+            long x, i;
+            if(t==1) {
+                i = nextInt();
+                x = nextInt();
+                if(!map.containsKey(i)) {
+                    sum -= curr;
+                }
+                else {
+                    sum -= map.get(i);
+                }
+                sum += x;
+                map.put(i, x);
+            }
+            else {
+                x = nextInt();
+                curr = x;
+                sum = n * x;
+                map = new HashMap<>();
+            }
+            out.println(sum);
         }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
-
         
     }
 
@@ -114,7 +135,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_Vicious_Labyrinth {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,21 +21,22 @@ public class Main {
     static void solve() throws IOException {
         // MainCode goes here
         int n = nextInt();
+        int x = nextInt();
 
         int[] arr = new int[n];
+        if(x%2==0) {
+            Arrays.fill(arr, n-1);
+            arr[n-2] = n;
+        }
+        else {
+            Arrays.fill(arr, n);
+            arr[n-1] = n-1;
+        }
+
         for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
-        }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
+            out.print(arr[i] + " ");
         }
         out.println();
-
         
     }
 
@@ -114,7 +115,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

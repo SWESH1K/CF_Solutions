@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class C_Make_Them_Equal {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -9,34 +9,73 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         int T = nextInt(); // Number of test cases
-
+        int t = 0, TT = T;
         while (T-- > 0) {
-            solve();
+            t++;
+            solve(t, TT);
         }
 
         out.flush();
         out.close();
     }
 
-    static void solve() throws IOException {
+    static boolean isPrime(int n) {
+        if(n<2) return false;
+        for(int i=2; i<=(int)Math.sqrt(n); i++) {
+            if(n%i==0) return false;
+        }
+        return true;
+    }
+
+    static void solve(int t, int T) throws IOException {
         // MainCode goes here
         int n = nextInt();
-
-        int[] arr = new int[n];
-        for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
-        }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
-
+        Debugger.log("n", n);
+        char c = next().charAt(0);
+        Debugger.log("c", c);
         
+        String s = next();
+        Debugger.log("s", s);
+
+        int freq = 0;
+        for(int i=0; i<n; i++) {
+            char sc = s.charAt(i);
+            if(sc == c) {
+                freq++;
+            }
+        }
+        if(freq == n) {
+            out.println(0);
+            return;
+        }
+        else if(freq == n-1) {
+            out.println(1);
+            if(s.charAt(n-1) == c)  {
+                out.println(n);
+            }
+            else {
+                out.println(n-1);
+            }
+            return;
+        }
+        for(int i=0; i<n; i++) {
+            char sc = s.charAt(i);
+            if(sc == c) {
+                if(n<2*(i+1)) {
+                    out.println(1);
+                    out.println(i+1);
+                    return;
+                }
+            }
+        }
+
+        out.println(2);
+        if(s.charAt(n-1) == c) {
+            out.println(n);
+        }
+        else {
+            out.println(n + " " + (n-1));
+        }
     }
 
     // -- Fast I/O helpers --
@@ -114,7 +153,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

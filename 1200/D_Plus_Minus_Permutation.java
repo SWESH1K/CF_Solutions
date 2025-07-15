@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class D_Plus_Minus_Permutation {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -20,21 +20,24 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        int n = nextInt();
+        long n = nextInt();
+        long l = nextInt();
+        long r = nextInt();
 
-        int[] arr = new int[n];
-        for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
-        }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
+        long a = n/l;
+        long b = n/r;
+
+        long lcm = (l*r)/gcd(l, r);
+        long c = n/lcm;
+
+        a -= c;
+        b -= c;
+
+        long ans = (n*(n+1))/2 - ((n-a)*(n-a+1))/2;
+
+        ans -= (b*(b+1))/2;
+
+        out.println(ans);
 
         
     }
@@ -114,7 +117,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

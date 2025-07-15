@@ -1,11 +1,12 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class D_Three_Activities {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     static PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));
+
 
     public static void main(String[] args) throws IOException {
         int T = nextInt(); // Number of test cases
@@ -22,20 +23,41 @@ public class Main {
         // MainCode goes here
         int n = nextInt();
 
-        int[] arr = new int[n];
-        for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
-        }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
+        List<Pair<Integer, Integer>> a = new ArrayList<>();
+        List<Pair<Integer, Integer>> b = new ArrayList<>();
+        List<Pair<Integer, Integer>> c = new ArrayList<>();
 
+        for(int i=0; i<n; i++) {
+            a.add(new Pair<>(nextInt(), i));
+        }
+        for(int i=0; i<n; i++) {
+            b.add(new Pair<>(nextInt(), i));
+        }
+        for(int i=0; i<n; i++) {
+            c.add(new Pair<>(nextInt(), i));
+        }
+
+        Collections.sort(a); Collections.sort(b); Collections.sort(c);
+        Debugger.log("a", a);
+        Debugger.log("b", b);
+        Debugger.log("c", c);
+        long ans = 0, curr;
+        for(int i=0; i<3; i++) {
+            curr = a.get(i).x;
+            for(int j=0; j<3; j++) {
+                if(b.get(j).y.compareTo(a.get(i).y) == 0) continue;
+                curr += b.get(j).x;
+                for(int k=0; k<3; k++) {
+                    if(c.get(k).y.compareTo(a.get(i).y) == 0 || c.get(k).y.compareTo(b.get(j).y) == 0) continue;
+                    curr += c.get(k).x;
+                    ans = Math.max(ans, curr);
+                    curr -= c.get(k).x;
+                }
+                curr -= b.get(j).x;
+            }
+        }
+
+        out.println(ans);
         
     }
 
@@ -114,7 +136,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];
@@ -152,7 +174,7 @@ public class Main {
         }
 
         private static String collectionToString(Collection<?> col) {
-            return col.toString();
+            return col.toString(); // Uses default: [a, b, c]
         }
 
         private static String mapToString(Map<?, ?> map) {
@@ -170,7 +192,8 @@ public class Main {
     }
 }
 
-final class Pair<T1, T2> {
+
+final class Pair<T1, T2> implements Comparable<Pair<T1, T2>> {
     T1 x; T2 y;
 
     public Pair(T1 x, T2 y) {
@@ -181,6 +204,11 @@ final class Pair<T1, T2> {
     public Pair(Pair<T1, T2> other) {
         this.x = other.x;
         this.y = other.y;
+    }
+
+    @Override
+    public int compareTo(Pair<T1, T2> other) {
+        return -Integer.compare((int)this.x, (int)other.x);
     }
 
     @Override

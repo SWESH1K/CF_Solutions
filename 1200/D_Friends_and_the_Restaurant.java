@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class D_Friends_and_the_Restaurant {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -23,19 +23,63 @@ public class Main {
         int n = nextInt();
 
         int[] arr = new int[n];
+
         for(int i=0; i<n; i++) {
             arr[i] = nextInt();
         }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
 
+        for(int i=0; i<n; i++) {
+            arr[i] = nextInt() - arr[i];
+        }
+        Debugger.log( "arr",arr);
+
+        TreeMap<Integer, Integer> posMap = new TreeMap<>();
+        TreeMap<Integer, Integer> negMap = new TreeMap<>();
+        int ans = 0;
+        for(int i=0; i<n; i++) {
+            if(arr[i]>=0) {
+                posMap.put(arr[i], posMap.getOrDefault(arr[i], 0)+1);
+            }
+            else {
+                negMap.put(arr[i], negMap.getOrDefault(arr[i], 0)+1);
+            }
+        }
+
+        while (!negMap.isEmpty() && !posMap.isEmpty()) { 
+            int mini = negMap.firstKey();
+            int maxi = posMap.lastKey();
+            if(-mini > maxi) {
+                negMap.remove(mini);
+                continue;
+            }
+
+            int miniVal = negMap.get(mini);
+            if(miniVal == 1) {
+                negMap.remove(mini);
+            }
+            else {
+                negMap.put(mini, miniVal-1);
+            }
+            
+            int maxiVal = posMap.get(maxi);
+            if(maxiVal == 1) {
+                posMap.remove(maxi);
+            }
+            else {
+                posMap.put(maxi, maxiVal-1);
+            }
+
+
+            ans++;
+        }
+
+        int rem = 0;
+        for(int num: posMap.values()) {
+            rem += num;
+        }
+        ans += rem/2;
+
+        out.println(ans);
         
     }
 
@@ -114,7 +158,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

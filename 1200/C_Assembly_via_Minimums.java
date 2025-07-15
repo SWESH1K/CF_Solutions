@@ -1,7 +1,8 @@
 import java.io.*;
+import java.security.spec.MGF1ParameterSpec;
 import java.util.*;
 
-public class Main {
+public class C_Assembly_via_Minimums {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -22,20 +23,47 @@ public class Main {
         // MainCode goes here
         int n = nextInt();
 
-        int[] arr = new int[n];
+        List<Integer> arr = new ArrayList<>();
+        int m = (n*(n-1))/2;
+        // Debugger.log("m", m);
+
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+
+        for(int i=0; i<m; i++) {
+            int x = nextInt();
+            map.put(x, map.getOrDefault(x, 0)+1);
+        }
+
+        List<Map.Entry<Integer, Integer>> li = new ArrayList<>(map.entrySet());
+        
+        int curr = n-1, counter=0;
+        while(curr>0) {
+            int pre = map.firstKey();
+            int val = map.get(pre);
+
+            arr.add(pre);
+            counter++;
+            val -= curr;
+            Debugger.log("Curr", curr);
+            Debugger.log("Map", map);
+            if(val==0) {
+                map.remove(pre);
+            }
+            else {
+                map.put(pre, val);
+            }
+            curr--;
+        }
+
+        if(counter!=n) {
+            arr.add(arr.get(counter-1));
+        }
+
+        Debugger.log(arr);
         for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
-        }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
+            out.print(arr.get(i) + " ");
         }
         out.println();
-
         
     }
 
@@ -114,7 +142,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

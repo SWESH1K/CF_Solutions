@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class D_Matryoshkas {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -23,20 +23,36 @@ public class Main {
         int n = nextInt();
 
         int[] arr = new int[n];
+
         for(int i=0; i<n; i++) {
             arr[i] = nextInt();
         }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
 
-        
+        Arrays.sort(arr);
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for(int i=n-1; i>=0; i--) {
+            if(map.containsKey(arr[i]+1)) {
+                int prev = map.get(arr[i]+1);
+                prev--;
+                if(prev == 0) {
+                    map.remove(arr[i]+1);
+                }
+                else {
+                    map.put(arr[i]+1, prev);
+                }
+            }
+            map.put(arr[i], map.getOrDefault(arr[i], 0)+1);
+            Debugger.log(map);
+        }
+        Debugger.log("\n");
+        int ans = 0;
+        for(int v: map.values()) {
+            ans += v;
+        }
+
+        out.println(ans);
     }
 
     // -- Fast I/O helpers --
@@ -114,7 +130,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

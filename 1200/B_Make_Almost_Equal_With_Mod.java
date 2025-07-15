@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_Make_Almost_Equal_With_Mod {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -22,20 +22,26 @@ public class Main {
         // MainCode goes here
         int n = nextInt();
 
-        int[] arr = new int[n];
-        for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
-        }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
+        long[] arr = new long[n];
 
+        for(int i=0; i<n; i++) {
+            arr[i] = nextLong();
+        }
+
+        for(long i=0; i<64; i++) {
+            int ones = 0, zeros = 0;
+            for(int j=0; j<n; j++) {
+                if(((arr[j]>>i)&1) == 0) zeros++; 
+                else ones++;
+            }
+            Debugger.log("i", i);
+            Debugger.log("zeros", zeros);
+            Debugger.log("ones", ones);
+            if(zeros!=0 && ones!=0) {
+                out.println((1L<<(i+1)));
+                return;
+            }
+        }
         
     }
 
@@ -114,7 +120,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

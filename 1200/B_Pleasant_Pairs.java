@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_Pleasant_Pairs {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,22 +21,25 @@ public class Main {
     static void solve() throws IOException {
         // MainCode goes here
         int n = nextInt();
-
-        int[] arr = new int[n];
-        for(int i=0; i<n; i++) {
+        int[] arr = new int[n+1];
+        for(int i=1; i<=n; i++) {
             arr[i] = nextInt();
         }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
+        int counter = 0;
+        for(int i=1; i<=n; i++) {
+            int req = arr[i]-(i%arr[i]);
+            Debugger.log("i", i);
+            Debugger.log("req", req);
+            while(req<=i) req+=arr[i];
+            while(req <= n) {
+                Debugger.log("req", req);
+                Debugger.log("res", arr[i]*arr[req], i+req);
+                if((long)arr[i]*arr[req] == (long)i+req) counter++;
+                req+=arr[i];
+            }
         }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
-
-        
+        // Debugger.log();
+        out.println(counter);
     }
 
     // -- Fast I/O helpers --
@@ -114,7 +117,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

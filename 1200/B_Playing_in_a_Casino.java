@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_Playing_in_a_Casino {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -18,24 +18,39 @@ public class Main {
         out.close();
     }
 
+    static long findVal(int[] arr) {
+        Arrays.sort(arr);
+        long sum = 0;
+        int n = arr.length;
+        int i=0, j=n-1;
+        long k = n-1;
+        while(i<j) {
+            sum += k*Math.abs(arr[i]-arr[j]);
+            k-=2;
+            i++; j--;
+        }
+
+        return sum;
+    }
+
     static void solve() throws IOException {
         // MainCode goes here
         int n = nextInt();
+        int m = nextInt();
 
-        int[] arr = new int[n];
-        for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
-        }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
+        int[][] matrix = new int[m][n];
 
+        for(int i=0;i<n; i++) {
+            for(int j=0; j<m; j++) {
+                matrix[j][i] = nextInt();
+            }
+        }
+        long ans = 0;
+        for(int i=0; i<m; i++) {
+            ans += findVal(matrix[i]);
+        }
+
+        out.println(ans);
         
     }
 
@@ -114,7 +129,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

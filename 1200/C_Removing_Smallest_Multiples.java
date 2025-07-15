@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class C_Removing_Smallest_Multiples {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -18,25 +18,54 @@ public class Main {
         out.close();
     }
 
+    static List<Integer> Factors(int n) {
+
+        Set<Integer> factors = new TreeSet<>();
+        for(int i=1; i<=(int)Math.sqrt(n); i++) {
+            if(n%i == 0) {
+                factors.add(i);
+                factors.add(n/i);
+            }
+        }
+
+        return new ArrayList<>(factors);
+    }
+
     static void solve() throws IOException {
         // MainCode goes here
         int n = nextInt();
 
-        int[] arr = new int[n];
-        for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
-        }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
+        char[] arr = next().toCharArray();
 
+        long[] ans = new long[n];
+
+        for(int i=0; i<n; i++) {
+            if(arr[i]=='1') continue;
+
+            int x = i+1;
+            while(x<=n) {
+                Debugger.log("x", x);
+                if(arr[x-1] == '0' && ans[x-1] == 0) {
+                    ans[x-1] = i+1;
+                    // arr[x-1] = '1';
+                }
+                else if(arr[x-1] != '0') {
+                    break;
+                }
+                x+=(i+1);
+                Debugger.log("Updated x to", x);
+            }
+            Debugger.log(arr);
+        }
+        Debugger.log(ans);
+        Debugger.log();
         
+        long total = 0;
+        for(int i=0; i<n; i++) {
+            total += ans[i];
+        }
+
+        out.println(total);
     }
 
     // -- Fast I/O helpers --
@@ -114,7 +143,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

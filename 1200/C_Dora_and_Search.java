@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class C_Dora_and_Search {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -26,16 +26,34 @@ public class Main {
         for(int i=0; i<n; i++) {
             arr[i] = nextInt();
         }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
 
+        int mini = 1, maxi = n;
+        int i = 0, j = n-1;
+
+        while(i<j) {
+            if(arr[i]!=mini && arr[i]!=maxi && arr[j]!=mini && arr[j]!=maxi) {
+                out.println((i+1) + " " + (j+1));
+                return;
+            }
+            if(arr[i] == mini) {
+                mini++;
+                i++;
+            }
+            else if(arr[j] == mini) {
+                mini++;
+                j--;
+            }
+            else if(arr[i] == maxi) {
+                maxi--;
+                i++;
+            }
+            else if(arr[j] == maxi) {
+                maxi--;
+                j--;
+            }
+        }
+
+        out.println(-1);
         
     }
 
@@ -114,7 +132,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

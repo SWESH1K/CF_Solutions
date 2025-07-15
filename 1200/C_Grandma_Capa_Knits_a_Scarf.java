@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class C_Grandma_Capa_Knits_a_Scarf {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -18,25 +18,60 @@ public class Main {
         out.close();
     }
 
+    static int countIt(String s, int start, int end, char c) {
+
+        int counter = 0;
+        while(start<end) {
+            if(s.charAt(start)!=s.charAt(end)) {
+                counter++;
+                if(s.charAt(start) == c) {
+                    start++;
+                }
+                else if(s.charAt(end) == c) {
+                    end--;
+                }
+                else {
+                    return -1;
+                }
+            }
+            else {
+                start++;
+                end--;
+            }
+        }
+
+        return counter;
+    }
+
     static void solve() throws IOException {
         // MainCode goes here
         int n = nextInt();
 
-        int[] arr = new int[n];
-        for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
-        }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
+        String s = next();
+        int start = 0, end = s.length()-1;
 
-        
+        while(start<end && s.charAt(start) == s.charAt(end)) {
+            start++;
+            end--;
+        }
+
+        int ans1 = countIt(s, start, end, s.charAt(start));
+        int ans2 = countIt(s, start, end, s.charAt(end));
+        int ans;
+        if(ans1!=-1 && ans2!=-1) {
+            ans = Math.min(ans1, ans2);
+        }
+        else if(ans1!=-1) {
+            ans = ans1;
+        }
+        else if(ans2!=-1) {
+            ans = ans2;
+        }
+        else {
+            ans = -1;
+        }
+
+        out.println(ans);
     }
 
     // -- Fast I/O helpers --
@@ -114,7 +149,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

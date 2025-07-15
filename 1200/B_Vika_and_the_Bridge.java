@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class B_Vika_and_the_Bridge {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,21 +21,59 @@ public class Main {
     static void solve() throws IOException {
         // MainCode goes here
         int n = nextInt();
+        int k = nextInt();
 
-        int[] arr = new int[n];
+        Map<Integer, Pair<Integer, Integer>> map = new HashMap<>();
+        Map<Integer, Integer> lastOcc = new HashMap<>();
+
         for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
-        }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
+            int x = nextInt();
 
+            if(lastOcc.containsKey(x)) {
+                int currDist = i-lastOcc.get(x)-1;
+                int maxi1 = map.get(x).y;
+                int maxi2 = map.get(x).x;
+                
+                if(currDist > maxi1) {
+                    Pair<Integer, Integer> updated = new Pair<>(maxi1, currDist);
+                    map.put(x, updated);
+                }
+                else if(currDist > maxi2) {
+                    Pair<Integer, Integer> updated = new Pair<>(currDist, maxi1);
+                    map.put(x, updated);
+                }
+            }
+            else {
+                map.put(x, new Pair<>(Integer.MIN_VALUE, i));
+            }
+            lastOcc.put(x, i);
+            Debugger.log("LastOcc",lastOcc);
+            Debugger.log("Map",map);
+        }
+        // Debugger.log("Map",map);
+        for(int x: map.keySet()) {
+            int currDist = n-lastOcc.get(x)-1;
+            int maxi1 = map.get(x).y;
+            int maxi2 = map.get(x).x;
+            
+            if(currDist > maxi1) {
+                Pair<Integer, Integer> updated = new Pair<>(maxi1, currDist);
+                map.put(x, updated);
+            }
+            else if(currDist > maxi2) {
+                Pair<Integer, Integer> updated = new Pair<>(currDist, maxi1);
+                map.put(x, updated);
+            }
+            Debugger.log("Map",map);
+        }
+
+        int mini = Integer.MAX_VALUE;
+        for(var e: map.values()) {
+            int curr =Math.max(e.x, e.y/2);
+            mini = Math.min(mini, curr);
+        }
+
+        out.println(mini);
         
     }
 
@@ -114,7 +152,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

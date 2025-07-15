@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class C_Virus {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,22 +21,38 @@ public class Main {
     static void solve() throws IOException {
         // MainCode goes here
         int n = nextInt();
-
-        int[] arr = new int[n];
-        for(int i=0; i<n; i++) {
+        int k = nextInt();
+        int[] arr = new int[k];
+        for(int i=0; i<k; i++) {
             arr[i] = nextInt();
         }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
+        Arrays.sort(arr);
+        int[] distances = new int[k];
+        for(int i=0; i<k-1; i++) {
+            distances[i] = arr[i+1]-arr[i]-1;
         }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
+        distances[k-1] = (n-arr[k-1]) + (arr[0]-1);
+        Arrays.sort(distances);
+        Debugger.log(distances);
 
-        
+        int saved = 0, counter=0;
+        for(int  i=k-1; i>=0; i--) {
+            int curr = distances[i] - (2*counter);
+            if(curr>1) {
+                saved += curr-1;
+                counter += Math.min(2, distances[i]-1);
+                Debugger.log("curr, saved, counter",curr + ", " + saved + ", " + counter);
+            }
+            else if(curr==1){
+                saved += 1;
+                counter += 1;
+                Debugger.log("saved, counter", saved + ", " + counter);
+                break;
+            }
+            else break;
+        }
+
+        out.println(n-saved);
     }
 
     // -- Fast I/O helpers --
@@ -114,7 +130,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

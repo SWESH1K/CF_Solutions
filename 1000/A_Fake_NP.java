@@ -1,18 +1,18 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class A_Fake_NP {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     static PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));
 
     public static void main(String[] args) throws IOException {
-        int T = nextInt(); // Number of test cases
+        // int T = nextInt(); // Number of test cases
 
-        while (T-- > 0) {
+        // while (T-- > 0) {
             solve();
-        }
+        // }
 
         out.flush();
         out.close();
@@ -20,22 +20,15 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        int n = nextInt();
+        int l = nextInt();
+        int r = nextInt();
 
-        int[] arr = new int[n];
-        for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
+        if(l==r) {
+            out.println(l);
         }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
+        else {
+            out.println(2);
         }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
-
         
     }
 
@@ -114,7 +107,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

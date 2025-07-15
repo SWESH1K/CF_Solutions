@@ -1,7 +1,8 @@
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
 
-public class Main {
+public class C_Contrast_Value {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -22,21 +23,40 @@ public class Main {
         // MainCode goes here
         int n = nextInt();
 
-        int[] arr = new int[n];
+        int arr[] = new int[n];
+        int flag=1;
+        boolean inc=false, dec=false;
         for(int i=0; i<n; i++) {
             arr[i] = nextInt();
+            if(flag == 1 && i>0 && arr[i]>arr[i-1]) {
+                inc=true;
+                flag=0;
+            }
+            else if(flag == 1 && i>0 && arr[i]<arr[i-1]) {
+                dec = true;
+                flag=0;
+            }
         }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
 
-        
+        if(flag==1) {
+            out.println(1);
+            return;
+        }
+
+        int counter = 0;
+        for(int i=1; i<n-1; i++) {
+            if(inc && arr[i]>=arr[i-1] && arr[i]>arr[i+1]) {
+                counter++;
+                inc=false;
+                dec=true;
+            }
+            else if(dec && arr[i]<=arr[i-1] && arr[i]<arr[i+1]) {
+                counter++;
+                inc=true;
+                dec=false;
+            }
+        }
+        out.println(2+counter);
     }
 
     // -- Fast I/O helpers --
@@ -114,7 +134,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

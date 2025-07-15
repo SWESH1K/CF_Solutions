@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class E_Scuza {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -21,21 +21,44 @@ public class Main {
     static void solve() throws IOException {
         // MainCode goes here
         int n = nextInt();
+        int m = nextInt();
 
-        int[] arr = new int[n];
+        long[] arr = new long[n+1];
+        long[] maxi = new long[n+1];
         for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
+            arr[i+1] = nextInt();
+            maxi[i+1] = Math.max(maxi[i], arr[i+1]);
+            if(i>0) arr[i+1]+=arr[i];
         }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
+        Debugger.log(maxi);
+        Debugger.log(arr);
+
+
+        while(m-->0) {
+            int x = nextInt();
+            long ans = 0;
+            int pos = 0;
+
+            int low=1, high=n;
+            while(low<=high) {
+                int mid = (low+high)/2;
+                
+                if(maxi[mid] <= x) {
+                    pos = mid;
+                    low=mid+1;
+                }
+                else {
+                    high=mid-1;
+                }
+            }
+            
+            Debugger.log("Found pos", pos);
+
+            ans = arr[pos];
+
+            out.print(ans + " ");
         }
         out.println();
-
         
     }
 
@@ -114,7 +137,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

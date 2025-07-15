@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class C_Breach_of_Faith {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -20,22 +20,30 @@ public class Main {
 
     static void solve() throws IOException {
         // MainCode goes here
-        int n = nextInt();
+        int n = 2*nextInt();
+        List<Integer> arr = new ArrayList<>();
+        Set<Integer> set = new HashSet<>();
 
-        int[] arr = new int[n];
         for(int i=0; i<n; i++) {
-            arr[i] = nextInt();
+            arr.add(nextInt());
         }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
 
+        Collections.sort(arr, Collections.reverseOrder());
+        Debugger.log(arr);
+        long total = 0;
+        for(int i=0; i<n-2; i+=2) {
+            total += arr.get(i) - arr.get(n-1-i);
+            Debugger.log("total", total);
+        }
+        Debugger.log(arr);
+        long req = total - arr.get(n-1);
+        Debugger.log( "req", req);
+        out.print(arr.get(n-1) + " ");
+        for(int i=0; i<n-1; i++) {
+            out.print(arr.get(i) + " ");
+            // Debugger.log(i + " " + (n-1-i));
+        }
+        out.println(req + arr.get(n-2));
         
     }
 
@@ -114,7 +122,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];

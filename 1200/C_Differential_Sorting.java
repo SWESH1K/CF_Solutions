@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class C_Differential_Sorting {
     // Fast I/O
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -18,24 +18,48 @@ public class Main {
         out.close();
     }
 
+    static boolean isValid(long[] arr) {
+        for(int i=0; i<arr.length-1; i++) {
+            if(arr[i]>arr[i+1]) return false;
+        }
+        return true;
+    }
+
     static void solve() throws IOException {
         // MainCode goes here
         int n = nextInt();
 
-        int[] arr = new int[n];
+        long[] arr = new long[n];
         for(int i=0; i<n; i++) {
             arr[i] = nextInt();
         }
-        for(int i=1; i<n; i++) {
-            arr[i] += arr[i-1];
-            Debugger.log("arr[i]", arr[i]);
-        }
-        Debugger.log("arr", arr);
-        for(int num: arr) {
-            out.print(num + " ");
-        }
-        out.println();
 
+        if(arr[n-2]>arr[n-1]) {
+            out.println(-1);
+            return;
+        }
+        if(isValid(arr)) {
+            out.println(0);
+            return;
+        }
+
+        long mini = Math.min(arr[n-2], arr[n-1]);
+        long maxi = Math.max(arr[n-2], arr[n-1]);
+        int counter = 0;
+        for(int i=n-3;i>=0; i--) {
+            if((mini-maxi) > mini) {
+                Debugger.log(i + " " + (mini-maxi) + " " + mini + " " + maxi);
+                out.println(-1);
+                return;
+            }
+            if(mini>=0) maxi = mini;
+            mini = mini-maxi;
+            counter++;
+        }
+        out.println(counter);
+        for(int i=n-3; i>=0; i--) {
+            out.println((i+1) + " " + (i+2) + " " + n);
+        }
         
     }
 
@@ -114,7 +138,7 @@ public class Main {
             if (DEBUG) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<Debugger> --> ");
+            sb.append("[Debugger] ");
 
             for (int i = 0; i < vars.length; i++) {
                 Object var = vars[i];
